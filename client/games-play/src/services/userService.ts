@@ -22,11 +22,12 @@ export function logout(): void {
     localStorage.removeItem(userIdName);
 }
 
-export async function register(): Promise<object> {
-    const response = await request.post(baseUrl + '/register');
+export async function register(data: object): Promise<object> {
+    const response = await request.post(baseUrl + '/register', data);
+
     console.log(response);
 
-    return {};
+    return response;
 }
 
 export function isLoggedIn(): boolean {
