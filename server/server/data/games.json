@@ -1,0 +1,34 @@
+{
+    "3564027f-adcd-4425-b2c0-1253d2386c0c": {
+        "title": "Diablo IV",
+        "category": "Fantasy",
+        "maxLevel": "100",
+        "imageUrl": "https://blz-contentstack-images.akamaized.net/v3/assets/blt77f4425de611b362/blt6d7b0fd8453e72b9/646e720a71d9db111a265e8c/d4-open-graph_001.jpg",
+        "summary": "Diablo 4 is set 50 years after Diablo 3 and the world of Sanctuary has been free from invasions by the Prime and Lesser Evils during that time. However, a religious order has started worshipping the fallen angel Inarius as a god and a smaller cult has started worshipping the banished demon princess Lilith.",
+        "_id": "3564027f-adcd-4425-b2c0-1253d2386c0c"
+    },
+    "c64db398-91cd-487c-b900-86058c0422f8": {
+        "title": "Dota 2",
+        "category": "MOBA",
+        "maxLevel": "99",
+        "imageUrl": "https://business-portal-bucket.s3.amazonaws.com/media/images/41e172c318357d632f53b92d8cb38661_lar.original.format-png.png",
+        "summary": "Dota 2 is played in matches between two teams of five players, with each team occupying and defending their own separate base on the map. Each of the ten players independently controls a powerful character known as a \"hero\" that all have unique abilities and differing styles of play.",
+        "_id": "c64db398-91cd-487c-b900-86058c0422f8"
+    },
+    "daf55cd4-9aa1-4b7a-82a9-fbdb74aaa84b": {
+        "title": "CS GO",
+        "category": "FPS",
+        "maxLevel": "99",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/730/capsule_616x353.jpg?t=1698860631",
+        "summary": "The game pits two teams, Terrorists and Counter-Terrorists, against each other in different objective-based game modes. The most common game modes involve the Terrorists planting a bomb while Counter-Terrorists attempt to stop them, or Counter-Terrorists attempting to rescue hostages that the Terrorists have captured.",
+        "_id": "daf55cd4-9aa1-4b7a-82a9-fbdb74aaa84b"
+    },
+    "18bfdb21-333b-42bd-a32c-c114263f2569": {
+        "title": "Colin McRae 3",
+        "category": "Racing",
+        "maxLevel": "99",
+        "imageUrl": "https://assets-prd.ignimgs.com/2022/01/07/dirt-3-complete-button-1641538621494.jpg",
+        "summary": "The game sees the return of many racing disciplines from Colin McRae: Dirt 2, but also introduces new modes and disciplines as well. Rallying takes place on technically challenging, non-circuit, point-to-point routes.",
+        "_id": "18bfdb21-333b-42bd-a32c-c114263f2569"
+    }
+}
