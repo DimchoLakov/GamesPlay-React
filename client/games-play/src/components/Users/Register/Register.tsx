@@ -28,8 +28,16 @@ export default function Register() {
         event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
+        const email = formData.get('email');
         const password = formData.get('password');
         const confirmPassword = formData.get('confirmPassword');
+        if (!email || !password || !confirmPassword) {
+            console.error('email, password and confirmPassword fields must not be empty.');
+            alert('email, password and confirmPassword fields must not be empty.');
+
+            return;
+        }
+
         if (password !== confirmPassword) {
             console.error('password and confirmPassword must match.');
             alert('password and confirmPassword must match.');

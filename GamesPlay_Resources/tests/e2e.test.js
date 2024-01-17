@@ -75,7 +75,7 @@ describe('E2E tests', function () {
 
             await page.fill('[name="email"]', data.email);
             await page.fill('[name="password"]', data.password);
-            await page.fill('[name="confirm-password"]', data.password);
+            await page.fill('[name="confirmPassword"]', data.password);
 
             const [request] = await Promise.all([
                 onRequest(),
@@ -640,8 +640,8 @@ describe('E2E tests', function () {
             await page.fill('[name="comment"]', comments[0].comment);
 
             getComments(comments.slice(0, 1));
-            
-            
+
+
             const [request] = await Promise.all([
                 onRequest(),
                 page.click('[type="submit"]')
@@ -652,10 +652,10 @@ describe('E2E tests', function () {
             const postData = JSON.parse(request.postData());
             expect(postData.gameId).to.equal(data._id);
             expect(postData.comment).to.equal(comments[0].comment);
-      
+
             await page.waitForTimeout(interval);
             let allComments = await page.$$eval('.details-comments ul li', t => t.map(s => s.textContent));
-    
+
             expect(allComments.length).to.be.equal(comments.length - 1);
             expect(allComments[0]).to.contains(comments[0].comment);
 
@@ -680,7 +680,7 @@ describe('E2E tests', function () {
             const postData2 = JSON.parse(request2.postData());
             expect(postData2.gameId).to.equal(data._id);
             expect(postData2.comment).to.equal(comments[1].comment);
-      
+
 
             allComments = await page.$$eval('.details-comments ul li', t => t.map(s => s.textContent));
             expect(allComments.length).to.be.equal(comments.length);

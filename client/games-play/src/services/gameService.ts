@@ -3,8 +3,11 @@ import * as request from './httpRequest';
 
 const baseUrl = 'http://localhost:3030/data/games';
 
-export async function getAll(): Promise<Game[]> {
-    const response = await request.get(baseUrl);
+export async function getAll(filters: string): Promise<Game[] | null> {
+    const response = await request.get(baseUrl + filters);
+    if (response.code === 404) {
+        return null;
+    }
     const result = Object.values(response) as Game[];
 
     return result;

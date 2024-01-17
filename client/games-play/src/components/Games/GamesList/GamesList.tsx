@@ -4,10 +4,10 @@ import { Game } from '../../../models/interfaces';
 import GamesListItem from '../GamesListItem/GamesListItem';
 
 export default function GamesList() {
-    const [games, setGames] = useState(new Array<Game>());
+    const [games, setGames] = useState<Game[] | null>(null);
 
     useEffect(() => {
-        gameService.getAll()
+        gameService.getAll('?sortBy=_createdOn%20desc')
             .then(result => setGames(result));
     }, []);
 
