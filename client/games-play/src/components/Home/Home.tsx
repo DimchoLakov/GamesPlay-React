@@ -1,4 +1,19 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Game } from '../../models/interfaces';
+import * as gameService from '../../services/gameService';
+
 const Home = () => {
+    const [games, setGames] = useState<Game[] | null>(null);
+
+    useEffect(() => {
+        gameService.getAll('?sortBy=_createdOn%20desc&distinct=category')
+            .then((response) => {
+                setGames(response);
+            })
+            .catch((err) => console.error(err.message));
+    }, []);
+
     return (
         <section id="welcome-world">
 
@@ -10,44 +25,21 @@ const Home = () => {
 
             <div id="home-page">
                 <h1>Latest Games</h1>
-
-                <div className="game">
-                    <div className="image-wrap">
-                        <img src="/images/CoverFire.png" />
+                {games && games.map(game =>
+                    <div key={game._id} className="game">
+                        <div className="image-wrap">
+                            <img src={game.imageUrl} />
+                        </div>
+                        <h3>{game.title}</h3>
+                        <div className="rating">
+                            <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                        </div>
+                        <div className="data-buttons">
+                            <Link to={`/data/games/${game._id}`} className="btn details-btn">Details</Link>
+                        </div>
                     </div>
-                    <h3>Cover Fire</h3>
-                    <div className="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                    </div>
-                    <div className="data-buttons">
-                        <a href="#" className="btn details-btn">Details</a>
-                    </div>
-                </div>
-                <div className="game">
-                    <div className="image-wrap">
-                        <img src="/images/ZombieLang.png" />
-                    </div>
-                    <h3>Zombie Lang</h3>
-                    <div className="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                    </div>
-                    <div className="data-buttons">
-                        <a href="#" className="btn details-btn">Details</a>
-                    </div>
-                </div>
-                <div className="game">
-                    <div className="image-wrap">
-                        <img src="/images/MineCraft.png" />
-                    </div>
-                    <h3>MineCraft</h3>
-                    <div className="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                    </div>
-                    <div className="data-buttons">
-                        <a href="#" className="btn details-btn">Details</a>
-                    </div>
-                </div>
-                <p className="no-articles">No games yet</p>
+                )}
+                {games?.length === 0 && <p className="no-articles">No games yet</p>}
             </div>
         </section>
     );

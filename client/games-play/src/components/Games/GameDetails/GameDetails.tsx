@@ -2,10 +2,12 @@ import { Game } from '../../../models/interfaces';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import * as gameService from '../../../services/gameService';
+import { useAuth } from '../../../services/AuthContext/useAuth';
 
 export default function GameDetails() {
     const [game, setGame] = useState({} as Game);
     const { gameId } = useParams();
+    const { isLoggedIn, user } = useAuth();
 
     useEffect(() => {
         gameService.getById(gameId!)
@@ -48,10 +50,12 @@ export default function GameDetails() {
                 </div>
 
                 {/* <!-- Edit/Delete buttons ( Only for creator of this game )  --> */}
-                <div className="buttons">
-                    <a href="#" className="button">Edit</a>
-                    <a href="#" className="button">Delete</a>
-                </div>
+                {isLoggedIn && user?._id === game._ownerId &&
+                    <div className="buttons">
+                        <a href="#" className="button">Edit</a>
+                        <a href="#" className="button">Delete</a>
+                    </div>
+                }
             </div>
 
             {/* <!-- Bonus --> */}

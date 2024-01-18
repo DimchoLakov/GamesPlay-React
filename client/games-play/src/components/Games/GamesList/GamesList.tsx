@@ -8,7 +8,8 @@ export default function GamesList() {
 
     useEffect(() => {
         gameService.getAll('?sortBy=_createdOn%20desc')
-            .then(result => setGames(result));
+            .then(result => setGames(result))
+            .catch(err => console.error(err.message));
     }, []);
 
     return (
@@ -19,7 +20,7 @@ export default function GamesList() {
                     <GamesListItem key={game._id} game={game} />
                 )}
 
-                {!games && <h3 className="no-articles">No articles yet</h3>}
+                {games?.length === 0 && <h3 className="no-articles">No articles yet</h3>}
             </section>
         </>
     );

@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Mocha Tests",
+            "program": "${workspaceFolder}/GamesPlay_Resources/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--timeout",
+                "5000", // Match the timeout specified in your configuration
+                "${workspaceFolder}/GamesPlay_Resources/tests/e2e.test.js", // Adjust the path to your test files
+                "--grep",
+                "show empty home page \\[ 5 Points \\]" // Adjust the grep pattern to match your test description
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+        }
+    ]
+}

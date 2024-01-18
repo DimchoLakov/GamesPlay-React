@@ -1,3 +1,4 @@
+import { User } from '../models/interfaces';
 import * as request from './httpRequest';
 
 const baseUrl = 'http://localhost:3030/users';
@@ -5,7 +6,7 @@ const authTokenName = 'authToken';
 const emailName = 'email';
 const userIdName = 'userId';
 
-export async function login(data: object): Promise<object> {
+export async function login(data: object): Promise<User> {
     const response = await request.post(baseUrl + '/login', data);
     if (response.code === 403) {
         alert(response.message);
