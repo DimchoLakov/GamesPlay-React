@@ -3,8 +3,7 @@ import * as request from './httpRequest';
 
 const baseUrl = 'http://localhost:3030/users';
 const authTokenName = 'authToken';
-const emailName = 'email';
-const userIdName = 'userId';
+const user = 'user';
 
 export async function login(data: object): Promise<User> {
     const response = await request.post(baseUrl + '/login', data);
@@ -13,9 +12,8 @@ export async function login(data: object): Promise<User> {
         throw new Error(response.message);
     }
 
-    localStorage.setItem(emailName, response.email);
     localStorage.setItem(authTokenName, response.accessToken);
-    localStorage.setItem(userIdName, response._id);
+    localStorage.setItem(user, JSON.stringify(response));
 
     return response;
 }
@@ -26,9 +24,8 @@ export async function logout(): Promise<boolean> {
 
         return false;
     } catch {
-        localStorage.removeItem(emailName);
         localStorage.removeItem(authTokenName);
-        localStorage.removeItem(userIdName);
+        localStorage.removeItem(user);
 
         return true;
     }

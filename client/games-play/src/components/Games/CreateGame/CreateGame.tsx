@@ -29,9 +29,12 @@ export default function CreateGame() {
         gameService.create(Object.fromEntries(formData))
             .then(() => {
                 navigate("/data/games");
-                console.log('game created')
+                console.log('game created');
             })
-            .catch((error) => console.error(error));
+            .catch((error) => {
+                alert(error);
+                console.error(error);
+            });
     }
 
     return (

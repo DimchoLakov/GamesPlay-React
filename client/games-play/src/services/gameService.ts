@@ -26,3 +26,10 @@ export async function create(data: object): Promise<Game> {
 
     return result;
 }
+
+export async function edit(gameId: string, data: object): Promise<Game> {
+    const response = await request.put(baseUrl + `/${gameId}`, data);
+    const result = response as Game;
+
+    return result;
+}

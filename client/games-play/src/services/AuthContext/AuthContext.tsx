@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode, useEffect } from 'react';
 import { User } from '../../models/interfaces';
 
 export interface AuthContextProps {
@@ -19,6 +19,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState<User | null>(null);
     const value = { isLoggedIn, setIsLoggedIn, user, setUser };
+
+    useEffect(() => {
+        const userAsJson = localStorage.getItem('user');
+        if (userAsJson) {
+            const user = JSON.parse(userAsJson);
+            setUser(user);
+            setIsLoggedIn(true);
+        }
+    }, []);
 
     return (
         <AuthContext.Provider value={value}>
