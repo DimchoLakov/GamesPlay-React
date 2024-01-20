@@ -1,6 +1,6 @@
 import { Game } from '../../../models/interfaces';
-import { Link, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import * as gameService from '../../../services/gameService';
 import { useAuth } from '../../../services/AuthContext/useAuth';
 
@@ -8,6 +8,7 @@ export default function GameDetails() {
     const [game, setGame] = useState({} as Game);
     const { gameId } = useParams();
     const { isLoggedIn, user } = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         gameService.getById(gameId!)
@@ -16,6 +17,20 @@ export default function GameDetails() {
                 console.error(error);
             });
     }, [gameId]);
+
+    const onDeleteClickHandler = (event: React.MouseEvent<HTMLElement>) => {
+        event.preventDefault();
+
+        if (confirm(`Are you sure you want to delete ${game.title}`)) {
+            gameService.del(gameId!)
+                .then(() => navigate('/'))
+                .catch((err) => console.error(err));
+
+            return;
+        }
+
+        return;
+    };
 
     return (
         <section id="game-details">
@@ -53,7 +68,7 @@ export default function GameDetails() {
                 {isLoggedIn && user?._id === game._ownerId &&
                     <div className="buttons">
                         <Link to={`/data/games/edit/${game._id}`} className="button">Edit</Link>
-                        <Link to={`/data/games/edit/${game._id}`} className="button">Delete</Link>
+                        <Link to={`/data/games/edit/${game._id}`} className="button" onClick={onDeleteClickHandler} >Delete</Link>
                     </div>
                 }
             </div>

@@ -33,3 +33,10 @@ export async function edit(gameId: string, data: object): Promise<Game> {
 
     return result;
 }
+
+export async function del(gameId: string): Promise<Game> {
+    const response = await request.del(baseUrl + `/${gameId}`);
+    const result = response as Game;
+
+    return result;
+}
