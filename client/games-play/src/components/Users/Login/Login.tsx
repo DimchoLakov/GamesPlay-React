@@ -11,7 +11,7 @@ const initialForm = {
 export default function Login() {
     const [form, setForm] = useState(initialForm);
     const navigate = useNavigate();
-    const { setIsLoggedIn, setUser } = useAuth();
+    const { setUser } = useAuth();
 
     const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
@@ -31,7 +31,6 @@ export default function Login() {
             .then((response) => {
                 console.log(response);
                 setUser(response);
-                setIsLoggedIn(true);
                 navigate('/');
             })
             .catch((error) => console.error(error));

@@ -14,7 +14,7 @@ export default function GameDetails() {
     const [commentsForm, setCommentsForm] = useState(intialCommentForm);
     const [comments, setComments] = useState<Comment[]>([]);
     const { gameId } = useParams();
-    const { isLoggedIn, user } = useAuth();
+    const { user } = useAuth();
     const navigate = useNavigate();
 
     const fetchComments = (gameId: string) => {
@@ -110,7 +110,7 @@ export default function GameDetails() {
                 </div>
 
                 {/* <!-- Edit/Delete buttons ( Only for creator of this game )  --> */}
-                {isLoggedIn && user?._id === game._ownerId &&
+                {user && user?._id === game._ownerId &&
                     <div className="buttons">
                         <Link to={`/data/games/edit/${game._id}`} className="button">Edit</Link>
                         <Link to={`/data/games/edit/${game._id}`} className="button" onClick={onDeleteClickHandler} >Delete</Link>
@@ -120,7 +120,7 @@ export default function GameDetails() {
 
             {/* <!-- Bonus --> */}
             {/* <!-- Add Comment ( Only for logged-in users, which is not creators of the current game ) --> */}
-            {isLoggedIn && user?._id !== game._ownerId &&
+            {user && user?._id !== game._ownerId &&
                 <article className="create-comment">
                     <label>Add new comment:</label>
                     <form className="form" onSubmit={onAddCommentFormSubmitHandler}>

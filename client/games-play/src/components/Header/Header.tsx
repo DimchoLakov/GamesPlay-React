@@ -4,12 +4,12 @@ import * as userService from '../../services/userService';
 import { useAuth } from '../../services/AuthContext/useAuth';
 
 const Header = () => {
-    const { isLoggedIn, setIsLoggedIn } = useAuth();
+    const { user, setUser } = useAuth();
 
     const handleLogout = (event: React.MouseEvent) => {
         event.preventDefault();
         userService.logout();
-        setIsLoggedIn(false);
+        setUser(null);
     };
 
     return (
@@ -17,7 +17,7 @@ const Header = () => {
             <h1><Link className="home" to="/">GamesPlay</Link></h1>
             <nav>
                 <Link to="/data/games">All games</Link>
-                {isLoggedIn ?
+                {user ?
                     <div id="user">
                         <Link to="/data/games/create">Create Game</Link>
                         <Link to="/users/logout" onClick={handleLogout}>Logout</Link>

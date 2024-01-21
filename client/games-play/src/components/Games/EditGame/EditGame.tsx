@@ -14,7 +14,7 @@ const initialForm = {
 export default function EditGame() {
     const [form, setForm] = useState(initialForm);
     const { gameId } = useParams();
-    const { isLoggedIn, user } = useAuth();
+    const { user } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,21 +25,6 @@ export default function EditGame() {
                 setForm(state => ({
                     ...state, ...currentGame
                 }))
-
-                if (!isLoggedIn) {
-                    const guestsCannotEditMessage = 'Guests cannot edit Games.';
-                    alert(guestsCannotEditMessage);
-                    console.error(guestsCannotEditMessage);
-                    navigate(-1);
-                }
-
-                if (user?._id !== currentGame?._ownerId) {
-                    const nonAuthorsCannotEditMessage = 'You are are not the author of this game, thus you cannot edit it.';
-                    alert(nonAuthorsCannotEditMessage);
-                    console.error(nonAuthorsCannotEditMessage);
-                    navigate(-1);
-                }
-
             } catch (err: unknown) {
                 if (err instanceof Error) {
                     alert(err.message);
@@ -53,7 +38,7 @@ export default function EditGame() {
         };
 
         fetchGame();
-    }, [gameId, isLoggedIn, navigate, user]);
+    }, [gameId, navigate, user]);
 
     const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm(state => {
