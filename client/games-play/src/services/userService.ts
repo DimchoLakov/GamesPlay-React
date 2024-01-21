@@ -1,12 +1,12 @@
 import { User } from '../models/interfaces';
 import * as request from './httpRequest';
+import { UsersBaseUrl } from './constants';
 
-const baseUrl = 'http://localhost:3030/users';
 const authTokenName = 'authToken';
 const user = 'user';
 
 export async function login(data: object): Promise<User> {
-    const response = await request.post(baseUrl + '/login', data);
+    const response = await request.post(UsersBaseUrl + '/login', data);
     if (response.code === 403) {
         alert(response.message);
         throw new Error(response.message);
@@ -20,7 +20,7 @@ export async function login(data: object): Promise<User> {
 
 export async function logout(): Promise<boolean> {
     try {
-        await request.get(baseUrl + '/logout');
+        await request.get(UsersBaseUrl + '/logout');
 
         return false;
     } catch {
@@ -32,7 +32,7 @@ export async function logout(): Promise<boolean> {
 }
 
 export async function register(data: object): Promise<object> {
-    const response = await request.post(baseUrl + '/register', data);
+    const response = await request.post(UsersBaseUrl + '/register', data);
 
     console.log(response);
 

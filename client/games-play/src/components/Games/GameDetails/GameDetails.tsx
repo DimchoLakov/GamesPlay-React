@@ -1,14 +1,29 @@
-import { Game } from '../../../models/interfaces';
+import { Game, Comment } from '../../../models/interfaces';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import * as gameService from '../../../services/gameService';
+import * as commentService from '../../../services/commentService';
 import { useAuth } from '../../../services/AuthContext/useAuth';
+
+const intialCommentForm = {
+    comment: ''
+};
 
 export default function GameDetails() {
     const [game, setGame] = useState({} as Game);
+    const [commentsForm, setCommentsForm] = useState(intialCommentForm);
+    const [comments, setComments] = useState<Comment[]>([]);
     const { gameId } = useParams();
     const { isLoggedIn, user } = useAuth();
     const navigate = useNavigate();
+
+    const fetchComments = (gameId: string) => {
+        commentService.getByGameId(gameId)
+            .then(response => setComments(response))
+            .catch((error) => {
+                console.error(error);
+            });
+    };
 
     useEffect(() => {
         gameService.getById(gameId!)
@@ -16,6 +31,8 @@ export default function GameDetails() {
             .catch((error) => {
                 console.error(error);
             });
+
+        fetchComments(gameId!);
     }, [gameId]);
 
     const onDeleteClickHandler = (event: React.MouseEvent<HTMLElement>) => {
@@ -30,6 +47,30 @@ export default function GameDetails() {
         }
 
         return;
+    };
+
+    const onCommentChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setCommentsForm(state => (
+            { ...state, [event.target.name]: event.target.value }
+        ));
+    };
+
+    const onAddCommentFormSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.target as HTMLFormElement);
+        formData.append('gameId', gameId!);
+        const data = Object.fromEntries(formData);
+
+        commentService.add(data)
+            .then(async () => {
+                await fetchComments(gameId!);
+                setCommentsForm(intialCommentForm);
+            })
+            .catch((error) => {
+                alert(error);
+                console.error(error);
+            });
     };
 
     return (
@@ -51,17 +92,21 @@ export default function GameDetails() {
                 {/* <!-- Bonus ( for Guests and Users ) --> */}
                 <div className="details-comments">
                     <h2>Comments:</h2>
-                    <ul>
-                        {/* <!-- list all comments for current game (If any) --> */}
-                        <li className="comment">
-                            <p>Content: I rate this one quite highly.</p>
-                        </li>
-                        <li className="comment">
-                            <p>Content: The best game.</p>
-                        </li>
-                    </ul>
+                    {comments?.length > 0 &&
+                        <ul>
+                            {/* <!-- list all comments for current game (If any) --> */}
+                            {comments.map((c, index) =>
+                                <li key={index.toString() + c.comment} className="comment">
+                                    <p>{c.comment}</p>
+                                </li>)
+                            }
+                        </ul>
+                    }
+
                     {/* <!-- Display paragraph: If there are no comments in the database --> */}
-                    <p className="no-comment">No comments.</p>
+                    {comments?.length === 0 &&
+                        <p className="no-comment">No comments.</p>
+                    }
                 </div>
 
                 {/* <!-- Edit/Delete buttons ( Only for creator of this game )  --> */}
@@ -78,8 +123,14 @@ export default function GameDetails() {
             {isLoggedIn && user?._id !== game._ownerId &&
                 <article className="create-comment">
                     <label>Add new comment:</label>
-                    <form className="form">
-                        <textarea name="comment" placeholder="Comment......"></textarea>
+                    <form className="form" onSubmit={onAddCommentFormSubmitHandler}>
+                        <textarea
+                            name="comment"
+                            placeholder="Comment......"
+                            value={commentsForm.comment}
+                            onChange={onCommentChangeHandler}
+                        >
+                        </textarea>
                         <input className="btn submit" type="submit" value="Add Comment" />
                     </form>
                 </article>

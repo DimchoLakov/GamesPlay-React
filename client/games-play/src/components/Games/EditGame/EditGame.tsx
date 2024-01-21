@@ -93,19 +93,49 @@ export default function EditGame() {
                 <div className="container">
                     <h1>Edit Game</h1>
                     <label htmlFor="leg-title">Legendary title:</label>
-                    <input type="text" id="title" name="title" value={form?.title} onChange={onChangeHandler} />
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value={form?.title}
+                        onChange={onChangeHandler}
+                    />
 
                     <label htmlFor="category">Category:</label>
-                    <input type="text" id="category" name="category" value={form?.category} onChange={onChangeHandler} />
+                    <input
+                        type="text"
+                        id="category"
+                        name="category"
+                        value={form?.category}
+                        onChange={onChangeHandler}
+                    />
 
                     <label htmlFor="levels">MaxLevel:</label>
-                    <input type="number" id="maxLevel" name="maxLevel" min="1" value={form?.maxLevel} onChange={onChangeHandler} />
+                    <input
+                        type="number"
+                        id="maxLevel"
+                        name="maxLevel"
+                        min="1"
+                        value={form?.maxLevel}
+                        onChange={onChangeHandler}
+                    />
 
                     <label htmlFor="game-img">Image:</label>
-                    <input type="text" id="imageUrl" name="imageUrl" value={form?.imageUrl} onChange={onChangeHandler} />
+                    <input
+                        type="text"
+                        id="imageUrl"
+                        name="imageUrl"
+                        value={form?.imageUrl}
+                        onChange={onChangeHandler}
+                    />
 
                     <label htmlFor="summary">Summary:</label>
-                    <textarea name="summary" id="summary" value={form?.summary} onChange={onChangeHandler}></textarea>
+                    <textarea
+                        name="summary"
+                        id="summary"
+                        value={form?.summary}
+                        onChange={onChangeHandler}
+                    ></textarea>
                     <input className="btn submit" type="submit" value="Edit Game" />
                 </div>
             </form>

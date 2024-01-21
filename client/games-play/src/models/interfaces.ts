@@ -15,3 +15,8 @@ export interface User {
     accessToken: string,
     username: string,
 }
+
+export interface Comment {
+    gameId: string,
+    comment: string,
+}
